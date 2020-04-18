@@ -78,45 +78,8 @@ if [ ! -d "${venvdir}/venv" ]; then
     echo -e "\nsource ${WD}/configs/.env" >> ${venvdir}/venv/bin/activate
 fi
 
-
-# if mac then install mysqlclient via homebrew (before attempting requirements.txt)
-if $macos; then
-    echo -e "\nChecking for installation of mysql via homebrew..."
-    brew list mysql-client
-    if [ $? -eq  1 ]; then
-      echo -e "\nMacOS installing mysql via homebrew..."
-      brew install mysql-client
-      if [ ! -e '${HOME}/.bash_profile' ]; then
-          touch ${HOME}/.bash_profile
-      fi
-
-      PATH_ADD='/usr/local/opt/mysql-client/bin'
-      if ! grep -q ${PATH_ADD} ${HOME}/.bash_profile; then
-          echo 'export PATH="'$PATH_ADD':$PATH"' >> ${HOME}/.bash_profile
-      fi
-
-      source ${HOME}/.bash_profile
-      env LDFLAGS="-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib" \
-
-    else
-      echo -e "\nmysql-client already installed."
-    fi
-    pip install mysqlclient
-
-else
-    # Check if mysqlclient is installed on the system
-    if [ -z "$(which mysql)" ]; then
-        echo -e "\n[error] mysql-client package not found\n"
-        echo -e "\nYou need mysql-client to continue with the install. \
-            \nTo install from command line, run: \
-            \n\t\tapt-get install mysql-client python3-dev default-libmysqlclient-dev \
-            \nPlease install mysql and rerun this setup script."
-    fi
-fi
-
-
 source ${venvdir}/venv/bin/activate
-${venvdir}/venv/bin/pip install -r $WD/requirements.txt
+${venvdir}/venv/bin/pip install -r $WD/$pipfile
 
 
 
