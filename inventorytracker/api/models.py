@@ -13,6 +13,7 @@ class Part(models.Model):
     name = models.CharField(max_length=100, primary_key=True)
     description = models.TextField(null=True)
     msrp = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    units = models.CharField(max_length=100, null=True)
     sku = models.CharField(max_length=100, null=True)
 
     def __str__(self):

@@ -58,7 +58,5 @@ fi
 source ${venvdir}/venv/bin/activate
 ${venvdir}/venv/bin/pip install -r $WD/$pipfile
 
-
-
 echo -e "Install complete!"
 
