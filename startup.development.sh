@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # ##############################################################################
 # Starting script project folder.
-# Creates configs directory and related environmental variables for accessing
 # local database and running python virtualenv.
 #
 # Dependencies:
@@ -33,28 +32,6 @@ else
     exit 1
 fi
 echo "MacOS operating system: $macos"
-
-
-# [Environment setup]
-# if configs/ exists, prompt to rebuild or pass.
-# Else if configs/ D.N.E. then ask for MySQL user credentials and
-# build environmental vars.
-if [ -d "${WD}/configs" ];
-then
-    echo -e "Rebuild local project directory and update sql configurations? \n"
-    echo -n "[y/n] "
-    read response
-
-    first=${response:0:1}
-    first=$(echo "$first" | tr '[:upper:]' '[:lower:]')
-    if [ "${first}" == "n" ]; then
-        rebuild=false
-    fi
-else
-    mkdir ${WD}/configs
-fi
-
-rebuild=${rebuild:=true}
 
 
 # Build python virtualenv environment using pip and requirements file.
